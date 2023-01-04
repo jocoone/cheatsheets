@@ -1,0 +1,45 @@
+@import 'prismjs/themes/prism-okaidia.css';
+@import 'prismjs/plugins/line-numbers/prism-line-numbers.css';
+
+@import './colors';
+
+code.language-cli {
+  &:before {
+    content: '> ';
+    color: hotpink;
+  }
+}
+
+.remark-highlight {
+  + h1,
+  + h2,
+  + h3,
+  + h4 {
+    margin-top: 2rem;
+  }
+}
+
+blockquote {
+  margin-left: 40px !important;
+  background-color: $white;
+  padding: 15px 25px;
+  border-left: 5px solid $gray-900;
+  font-style: italic;
+  box-shadow: 0px 2px 3px 0px $box-shadow;
+
+  p {
+    margin-bottom: 0;
+  }
+
+  blockquote {
+    margin-top: 15px;
+  }
+}
+
+.token.comment {
+  color: $comment;
+}
+
+.token.table-data {
+  color: $white;
+}

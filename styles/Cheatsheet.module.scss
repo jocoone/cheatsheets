@@ -1,0 +1,153 @@
+@import './colors';
+
+.cheatsheettitle {
+  text-align: left;
+  font-weight: 600;
+}
+
+.cheatsheetcontent {
+  h1 {
+    margin-bottom: 0;
+
+    + h2 {
+      margin-top: 0;
+    }
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    position: relative;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-weight: 400;
+    color: $text-color;
+
+    &:hover {
+      a {
+        opacity: 1;
+      }
+    }
+
+    a {
+      width: 24px;
+      position: absolute;
+      display: flex;
+      left: -30px;
+      opacity: 0;
+      height: 100%;
+      transition: opacity 0.2s ease-out;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+
+      &::before {
+        font-size: 20px;
+      }
+    }
+  }
+
+  b {
+    font-weight: 500;
+  }
+
+  a {
+    text-decoration: underline;
+    color: $link;
+  }
+
+  * {
+    + h1 {
+      margin-top: 4rem;
+    }
+  }
+
+  p {
+    img {
+      width: 100%;
+    }
+
+    sup + sup {
+      margin-left: 5px;
+    }
+  }
+
+  table {
+    width: 100%;
+    margin-bottom: 2rem;
+
+    thead tr th {
+      background-color: #b9b9b9;
+    }
+
+    td,
+    th {
+      padding: 5px 15px;
+    }
+
+    td,
+    th {
+      border: 1px solid #b9b9b9;
+    }
+  }
+}
+
+.author {
+  display: flex;
+  margin-bottom: 2rem;
+  letter-spacing: 2px;
+  gap: 15px;
+
+  .initials {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background-color: $primary;
+    color: $white;
+    font-size: 1.5em;
+    width: 50px;
+    height: 50px;
+  }
+
+  .name {
+    font-weight: 600;
+  }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .date {
+    color: #70706f;
+    font-size: 0.8em;
+  }
+}
+
+.tags {
+  display: flex;
+  gap: 5px;
+  margin-bottom: 3rem;
+
+  span {
+    background-color: $primary;
+    border-radius: 5px;
+    padding: 3px 10px;
+    color: $white;
+    text-transform: lowercase;
+    font-weight: 200;
+  }
+}
+
+@media screen and (min-width: 1100px) {
+  .cheatsheetcontent {
+    p {
+      img {
+        max-width: 50%;
+        margin: 0 auto;
+        display: flex;
+      }
+    }
+  }
+}

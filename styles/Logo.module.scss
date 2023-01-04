@@ -1,0 +1,74 @@
+@mixin animate($animation, $duration, $method, $delay) {
+  animation: $animation $duration $method $delay;
+}
+
+@mixin dash($dashoffset) {
+  stroke-dashoffset: $dashoffset;
+  stroke-dasharray: $dashoffset;
+  fill-opacity: 0;
+}
+
+@mixin draw($letter, $dashoffset, $index) {
+  $time: 1s;
+  $drawdelay: ($index - 1) * ($time / 2 - 0.3);
+
+  @include dash($dashoffset);
+  @include animate(draw#{$letter}, $time, forwards, $drawdelay);
+
+  @keyframes draw#{$letter} {
+    0% {
+      stroke-dashoffset: $dashoffset;
+    }
+    70% {
+      stroke-dashoffset: 0;
+      fill-opacity: 0;
+    }
+    100% {
+      stroke-dashoffset: 0;
+      fill-opacity: 1;
+    }
+  }
+}
+
+.group {
+  path {
+    fill: rgb(67, 67, 67);
+    fill-rule: nonzero;
+    stroke: #6b280f;
+    stroke-width: 8px;
+  }
+
+  .letterC {
+    @include draw("letterC", 2270, 1);
+  }
+  .letterH1 {
+    @include draw("letterH1", 2288, 2);
+  }
+  .letterE1 {
+    @include draw("letterE1", 2626, 3);
+  }
+  .letterA {
+    @include draw("letterA", 2417, 4);
+  }
+  .letterT1 {
+    @include draw("letterT1", 1609, 5);
+  }
+  .letterS1 {
+    @include draw("letterS1", 2818, 6);
+  }
+  .letterH2 {
+    @include draw("letterH2", 2288, 7);
+  }
+  .letterE2 {
+    @include draw("letterE2", 2626, 8);
+  }
+  .letterE3 {
+    @include draw("letterE3", 2626, 9);
+  }
+  .letterT2 {
+    @include draw("letterT2", 1609, 10);
+  }
+  .letterS2 {
+    @include draw("letterS2", 2818, 11);
+  }
+}
