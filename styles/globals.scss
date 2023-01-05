@@ -16,6 +16,7 @@ body {
     Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   background-color: $background;
   color: $text-color;
+  font-weight: 300;
 }
 
 a {
@@ -25,6 +26,11 @@ a {
 
 * {
   box-sizing: border-box;
+}
+
+b,
+strong {
+  font-weight: 700;
 }
 
 .page {
@@ -99,9 +105,7 @@ footer {
   align-items: center;
   height: 50px;
   background-color: white;
-  position: fixed;
   width: 100vw;
-  bottom: 0;
   padding: 50px 0;
   box-shadow: 0px -2px 3px 0px $box-shadow;
 
@@ -123,16 +127,29 @@ footer {
   }
 }
 
-.rbt-menu .dropdown-item {
-  &:hover,
-  &.active {
-    background-color: lighten(#e8b5a2, 0.5);
-    color: $text-color;
+.rbt-menu {
+  .category-title {
+    margin-left: 1rem;
+    margin-right: 1rem;
+    margin-bottom: 0.5rem;
+    border-bottom: 1px solid $gray-300;
+    padding: 0 1rem 0.5rem 0;
+    display: block;
   }
 
-  .menu-item {
+  .dropdown-item {
     display: flex;
     align-items: center;
+
+    + .category-title {
+      margin-top: 1rem;
+    }
+
+    &:hover,
+    &.active {
+      background-color: lighten(#e8b5a2, 0.5);
+      color: $text-color;
+    }
 
     .tags {
       margin-left: 15px;

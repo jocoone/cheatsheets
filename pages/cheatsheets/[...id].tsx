@@ -1,12 +1,10 @@
 import Layout from 'src/components/layout';
 import Head from 'next/head';
-import { getFiles } from 'utils/fileread';
 import { format } from 'date-fns';
 import { getPostData, PostData } from '../../utils/cheatsheet';
 
 import styles from '../../styles/Cheatsheet.module.scss';
-
-const CHEATSHEETS_DIR = './cheatsheets';
+import { cheatsheetFiles } from 'src/domain/cheatsheet';
 
 interface PageData {
   id: string[];
@@ -25,8 +23,7 @@ export async function getStaticProps({ params }: { params: PageData }) {
 }
 
 export async function getStaticPaths() {
-  const files: Array<string> = Array.from(getFiles(CHEATSHEETS_DIR));
-  const posts = files.map((file: string) => file.split('.')[0]);
+  const posts = cheatsheetFiles.map((file: string) => file.split('.')[0]);
 
   const paths = posts.map((post) => ({
     params: { id: post.split('/') }
@@ -36,7 +33,7 @@ export async function getStaticPaths() {
 }
 
 export default function CheatSheet({ postData, tags }: { postData: PostData; tags: string[] }) {
-  const initials = (postData.author || '')
+  const initials = (postData.author?.name || '')
     .split(' ')
     .slice(0, 2)
     .map((words: string) => words.charAt(0));
@@ -49,7 +46,9 @@ export default function CheatSheet({ postData, tags }: { postData: PostData; tag
         <div className={styles.author}>
           <div className={styles.initials}>{initials}</div>
           <div className={styles.content}>
-            <div className={styles.name}>{postData.author}</div>
+            <a href={`/authors/${postData.author?.id}`} className={styles.name}>
+              {postData.author?.name}
+            </a>
             {postData.date && (
               <div className={styles.date}>{format(new Date(postData.date), 'MMMM do, yyyy')}</div>
             )}

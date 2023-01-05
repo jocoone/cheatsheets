@@ -1,30 +1,21 @@
-import { Cheatsheet } from "src/domain/cheatsheet";
-import type { NextApiRequest, NextApiResponse } from "next";
-import { getFiles } from "utils/fileread";
-import { parseMatterFile } from "utils/cheatsheet";
-import { toKebabCase } from "utils/string";
+import { CheatsheetResult, CHEATSHEETS } from 'src/domain/cheatsheet';
+import type { NextApiRequest, NextApiResponse } from 'next';
+import { AuthorResult, getAuthors } from 'src/domain/author';
 
-const CHEATSHEETS_DIR = "cheatsheets";
-const cheatsheetFiles = Array.from(getFiles(CHEATSHEETS_DIR)) as string[];
-const cheatsheets: Cheatsheet[] = cheatsheetFiles.map((file: string) => {
-  const matterResult = parseMatterFile(file);
-  const fileResult = file.replace(".md", "");
-  const tags = (matterResult.data.tags || []).split(",").map((tag: string) => tag.trim());
-  return {
-    id: toKebabCase(fileResult),
-    title: matterResult.data.title,
-    url: `/${CHEATSHEETS_DIR}/${fileResult}`,
-    tags
-  };
-});
+const cheatsheets: CheatsheetResult[] = CHEATSHEETS;
+const authors = getAuthors(cheatsheets);
 
 export default function handler(
   req: NextApiRequest,
-  res: NextApiResponse<Cheatsheet[]>
+  res: NextApiResponse<(CheatsheetResult | AuthorResult)[]>
 ) {
-  const query: string = (req.query.q?.toString() || "").toLowerCase();
-  const result = cheatsheets.filter((cheatsheet) =>
+  const query: string = (req.query.q?.toString() || '').toLowerCase();
+  const cheatSheetResult = cheatsheets.filter((cheatsheet) =>
     cheatsheet.title.toLowerCase().includes(query)
   );
-  res.status(200).json(result);
+  const authorResult = authors.filter((author: AuthorResult) =>
+    author.name.toLocaleLowerCase().includes(query)
+  );
+
+  res.status(200).json([...authorResult, ...cheatSheetResult]);
 }
