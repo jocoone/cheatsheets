@@ -19,6 +19,7 @@
     "@fortawesome/free-regular-svg-icons": "^6.2.1",
     "@fortawesome/free-solid-svg-icons": "^6.2.1",
     "@fortawesome/react-fontawesome": "^0.2.0",
+    "@next/font": "^13.1.1",
     "@types/node": "18.11.9",
     "@types/react": "18.0.25",
     "@types/react-bootstrap-typeahead": "^5.1.8",
