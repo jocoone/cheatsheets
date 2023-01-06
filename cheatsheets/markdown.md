@@ -2,6 +2,7 @@
 title: Markdown in Cheatsheets
 author: Joey Comhaire
 date: 2023-01-04
+description: This is a short explanation about what you can do to create cheatsheet on this platform. If something is missing, feel free to add extra information or help making this platform even better.
 tags: Markdown, Cheatsheet, Knowledge Sharing
 ---
 

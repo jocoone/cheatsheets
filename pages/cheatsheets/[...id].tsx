@@ -5,6 +5,7 @@ import { getPostData, PostData } from '../../utils/cheatsheet';
 
 import styles from '../../styles/Cheatsheet.module.scss';
 import { cheatsheetFiles } from 'src/domain/cheatsheet';
+import Tag from 'src/components/tag';
 
 interface PageData {
   id: string[];
@@ -12,12 +13,10 @@ interface PageData {
 
 export async function getStaticProps({ params }: { params: PageData }) {
   const postData = await getPostData(params.id);
-  const tags = (postData.tags || '').split(',').map((tag: string) => tag.trim());
 
   return {
     props: {
-      postData,
-      tags
+      postData
     }
   };
 }
@@ -32,7 +31,7 @@ export async function getStaticPaths() {
   return { paths, fallback: false };
 }
 
-export default function CheatSheet({ postData, tags }: { postData: PostData; tags: string[] }) {
+export default function CheatSheet({ postData }: { postData: PostData }) {
   const initials = (postData.author?.name || '')
     .split(' ')
     .slice(0, 2)
@@ -56,8 +55,8 @@ export default function CheatSheet({ postData, tags }: { postData: PostData; tag
         </div>
         <h1 className={styles.cheatsheettitle}>{postData.title}</h1>
         <div className={styles.tags}>
-          {(tags || []).map((tag: string, index: number) => (
-            <span key={index}>{tag}</span>
+          {(postData.tags || []).map((tag: string, index: number) => (
+            <Tag key={index} tag={tag} />
           ))}
         </div>
         <div

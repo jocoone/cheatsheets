@@ -116,6 +116,7 @@ const Search = ({ className, select }: Props) => {
             {cheatSheets.map((result, index) => (
               <CustomMenuItem option={result} position={index} search={text} key={result.id} />
             ))}
+            {!results.length && <div className="no-pages">No pages found</div>}
           </Menu>
         );
       }}
