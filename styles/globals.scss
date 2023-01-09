@@ -15,7 +15,11 @@ body {
   background-color: $white;
   color: $text-color;
   font-weight: 400;
-  letter-spacing: 4px;
+  letter-spacing: 2px;
+}
+
+code {
+  letter-spacing: 0px;
 }
 
 a {
@@ -36,10 +40,54 @@ strong {
   display: flex;
   justify-content: center;
 
+  &.full {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+
+    .page-container {
+      width: 100vw;
+      height: 100vh;
+    }
+  }
+
   .page-container {
     width: 100%;
     padding: 110px 24px 150px 24px;
     text-align: center;
+  }
+}
+
+button,
+.button {
+  border: none;
+  border-radius: 6px;
+  color: $white;
+  padding: 8px 35px;
+  line-height: 32px;
+  border: 1px solid $primary;
+  text-align: center;
+  min-width: 150px;
+  transition: color 0.3s ease;
+
+  &.primary {
+    background-color: $primary;
+  }
+
+  &.secondary {
+    background-color: $white;
+    color: $text-color;
+    border-color: $text-color;
+
+    &:hover {
+      background-color: $text-color;
+    }
+  }
+
+  &:hover {
+    color: $white;
+    opacity: 0.8;
   }
 }
 
@@ -107,6 +155,8 @@ footer {
   width: 100%;
   padding: 50px 0;
   box-shadow: 0px -2px 3px 0px $box-shadow;
+  bottom: 0;
+  position: fixed;
 
   img {
     width: 120px;
@@ -174,9 +224,11 @@ footer {
 
 @media screen and (min-width: 1100px) {
   .page {
-    .page-container {
-      max-width: 1050px;
-      text-align: left;
+    &:not(.full) {
+      .page-container {
+        max-width: 1050px;
+        text-align: left;
+      }
     }
   }
 }

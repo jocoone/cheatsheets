@@ -10,40 +10,28 @@ import { TYPE } from 'src/domain/common';
 import { Author } from 'src/domain/author';
 
 export default function Home() {
-  const [showTypeahead, setShowTypeahead] = useState(false);
-
-  function select([option]: any[]) {
-    if (option) {
-      switch (option.type) {
-        case TYPE.CHEATSHEET:
-          const cheatsheet = option as Cheatsheet;
-          location.href = cheatsheet.url;
-          break;
-        case TYPE.PEOPLE:
-          const author = option as Author;
-          location.href = `/authors/${author.id}`;
-          break;
-      }
-    }
-  }
-
-  useEffect(() => setShowTypeahead(true));
-
-  if (!showTypeahead) {
-    return null;
-  }
-
   return (
     <>
       <Head>
-        <title>Cheatsheets</title>
+        <title>Home</title>
       </Head>
-      <Layout>
+      <Layout full={true}>
         <div className={styles.content}>
-          <div className={styles.header}>
-            <Logo className={styles.logo} />
+          <div className={styles.title}>
+            <h1>Start sharing your knowledge</h1>
+            <p>It is good to have a lot of knowledge. It is even better to share it with others.</p>
+            <div className={styles.buttons}>
+              <a href="/howto" className="button primary">
+                Start sharing
+              </a>
+              <a href="/search" className="button secondary">
+                Search
+              </a>
+            </div>
           </div>
-          <Search className={styles.search} select={select} />
+          <div className={styles.picture}>
+            <img src="/pic.png" alt="pic" />
+          </div>
         </div>
       </Layout>
     </>
