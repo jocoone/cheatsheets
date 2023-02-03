@@ -1,12 +1,13 @@
 import { Cheatsheet, CheatsheetResult } from 'src/domain/cheatsheet';
 import { Menu, MenuItem, Typeahead, UseAsyncProps, withAsync } from 'react-bootstrap-typeahead';
 import { Option } from 'react-bootstrap-typeahead/types/types';
-import { ComponentType, useReducer } from 'react';
+import { ComponentType, useEffect, useReducer, useState } from 'react';
 import { Author, AuthorResult } from 'src/domain/author';
 import { TYPE } from 'src/domain/common';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPerson, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { faFile } from '@fortawesome/free-regular-svg-icons';
+import { faHashtag } from '@fortawesome/free-solid-svg-icons/faHashtag';
 
 const AsyncTypeahead = withAsync(Typeahead as ComponentType<UseAsyncProps>);
 
@@ -59,21 +60,31 @@ type MenuItemProps = {
   option: CheatsheetResult | AuthorResult;
   position: number;
   search: string;
-  type: 'person' | 'article';
+  type: 'person' | 'article' | 'other';
+};
+
+const ICON_MAPPER = {
+  person: faPerson,
+  article: faFile,
+  other: faHashtag
 };
 
 const CustomMenuItem = ({ option, position, search, type }: MenuItemProps) => {
-  const regex = new RegExp(search, 'i');
-  const field = option.value;
-  const executed = regex.exec(field) || [];
-  const titleParts = field.split(regex).join(`<b>${executed[0]}</b>`);
+  const [title, setTitle] = useState('');
+
+  useEffect(() => {
+    const regex = new RegExp(search, 'i');
+    const field = option.value;
+    const executed = regex.exec(field) || [];
+    setTitle(field.split(regex).join(`<b>${executed[0]}</b>`));
+  }, [option.id]);
 
   return (
     <MenuItem option={option} position={position}>
-      <FontAwesomeIcon icon={type === 'article' ? faFile : faPerson} className="menu-item-icon" />
+      <FontAwesomeIcon icon={ICON_MAPPER[type] || faHashtag} className="menu-item-icon" />
       <div className="item-info">
-        <span className="title" dangerouslySetInnerHTML={{ __html: titleParts }}></span>
-        {option.type === TYPE.CHEATSHEET && (option as CheatsheetResult).author && (
+        <span className="title" dangerouslySetInnerHTML={{ __html: title }}></span>
+        {(option as CheatsheetResult).author && (
           <span className="author">{(option as CheatsheetResult).author}</span>
         )}
       </div>
@@ -115,19 +126,10 @@ const Search = ({
         renderMenu={(results: any[], menuProps: any, { text }: any) => {
           const people = results.filter((result) => result.type === TYPE.PEOPLE);
           const cheatSheets = results.filter((result) => result.type === TYPE.CHEATSHEET);
+          const other = results.filter((result) => result.type === TYPE.OTHER);
 
           return (
             <Menu {...menuProps}>
-              {people.length ? <span className="category-title">People</span> : null}
-              {people.map((result, index) => (
-                <CustomMenuItem
-                  option={result}
-                  position={index}
-                  search={text}
-                  key={result.id}
-                  type="person"
-                />
-              ))}
               {cheatSheets.length ? <span className="category-title">Cheatsheets</span> : null}
               {cheatSheets.map((result, index) => (
                 <CustomMenuItem
@@ -136,6 +138,26 @@ const Search = ({
                   search={text}
                   key={result.id}
                   type="article"
+                />
+              ))}
+              {people.length ? <span className="category-title">People</span> : null}
+              {people.map((result, index) => (
+                <CustomMenuItem
+                  option={result}
+                  position={index + cheatSheets.length}
+                  search={text}
+                  key={result.id}
+                  type="person"
+                />
+              ))}
+              {other.length ? <span className="category-title">Other</span> : null}
+              {other.map((result, index) => (
+                <CustomMenuItem
+                  option={result}
+                  position={index + cheatSheets.length + people.length}
+                  search={text}
+                  key={result.id}
+                  type="other"
                 />
               ))}
               {!results.length && <div className="no-pages">No pages found</div>}

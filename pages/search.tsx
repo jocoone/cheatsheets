@@ -1,5 +1,4 @@
 import Layout from 'src/components/layout';
-import { Cheatsheet } from 'src/domain/cheatsheet';
 import { useEffect, useState } from 'react';
 
 import styles from '../styles/Search.module.scss';
@@ -13,13 +12,14 @@ export function select([option]: any[]) {
   if (option) {
     switch (option.type) {
       case TYPE.CHEATSHEET:
-        const cheatsheet = option as Cheatsheet;
-        location.href = cheatsheet.url;
+        location.href = option.url;
         break;
       case TYPE.PEOPLE:
         const author = option as Author;
         location.href = `/authors/${author.id}`;
         break;
+      default:
+        location.href = option.url;
     }
   }
 }

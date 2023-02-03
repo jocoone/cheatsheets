@@ -1,0 +1,12 @@
+@import './colors';
+
+.content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+
+  h4 .enlarge {
+    font-size: 3em;
+  }
+}

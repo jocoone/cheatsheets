@@ -1,8 +1,20 @@
 import { CheatsheetResult, CHEATSHEETS } from 'src/domain/cheatsheet';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { AuthorResult, getAuthors } from 'src/domain/author';
+import { TYPE } from '../../src/domain/common';
 
-const cheatsheets: CheatsheetResult[] = CHEATSHEETS;
+const cheatsheets: CheatsheetResult[] = [
+  ...CHEATSHEETS,
+  {
+    id: 'howto-og',
+    title: 'How To create a Cheatsheet',
+    url: '/howto',
+    author: 'Cheatsheets Team',
+    tags: [],
+    type: TYPE.OTHER,
+    value: 'How To create a Cheatsheet'
+  }
+];
 const authors = getAuthors(cheatsheets);
 
 export default function handler(
