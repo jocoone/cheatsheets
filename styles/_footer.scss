@@ -1,0 +1,23 @@
+@import "./colors";
+
+footer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  height: 50px;
+  background-color: white;
+  width: 100%;
+  padding: 25px;
+  position: absolute;
+  bottom: 10px;
+
+  img {
+    width: 120px;
+  }
+
+  .copyright {
+    font-size: 10px;
+    margin-top: 12px;
+  }
+}

@@ -1,13 +1,7 @@
 import Layout from 'src/components/layout';
-import { Cheatsheet } from 'src/domain/cheatsheet';
-import { useEffect, useState } from 'react';
 
 import styles from '../styles/Home.module.scss';
-import Logo from 'src/components/logo';
 import Head from 'next/head';
-import Search from 'src/components/search';
-import { TYPE } from 'src/domain/common';
-import { Author } from 'src/domain/author';
 
 export default function Home() {
   return (

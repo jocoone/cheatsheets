@@ -5,11 +5,12 @@
   flex-direction: column;
 
   article {
-    order: 2;
+    order: 1;
     display: flex;
     justify-content: center;
     flex-direction: column;
     align-items: center;
+    flex: 1;
 
     h5 {
       text-transform: uppercase;
@@ -23,8 +24,6 @@
 
       li {
         padding: 1rem 0;
-        max-width: 550px;
-        padding: 10px 0;
 
         + li {
           border-bottom: 1px solid $gray-300;
@@ -72,7 +71,7 @@
   }
 
   aside {
-    order: 1;
+    order: 2;
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -118,15 +117,16 @@
 
 @media screen and (min-width: 1100px) {
   .main {
-    display: grid;
-    grid-template-areas: 'article article article aside';
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    flex-direction: row-reverse;
+    column-gap: 25px;
 
     article {
       grid-area: article;
       display: flex;
       justify-self: flex-start;
       align-items: flex-start;
+      flex: 3;
+      order: 2;
 
       ul li {
         .tags {
@@ -140,6 +140,8 @@
       text-align: left;
       justify-content: flex-start;
       align-items: flex-start;
+      flex: 2;
+      order: 1;
     }
   }
 }

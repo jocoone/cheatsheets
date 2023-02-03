@@ -9,23 +9,23 @@ import Search from 'src/components/search';
 import { TYPE } from 'src/domain/common';
 import { Author } from 'src/domain/author';
 
-export default function Home() {
-  const [showTypeahead, setShowTypeahead] = useState(false);
-
-  function select([option]: any[]) {
-    if (option) {
-      switch (option.type) {
-        case TYPE.CHEATSHEET:
-          const cheatsheet = option as Cheatsheet;
-          location.href = cheatsheet.url;
-          break;
-        case TYPE.PEOPLE:
-          const author = option as Author;
-          location.href = `/authors/${author.id}`;
-          break;
-      }
+export function select([option]: any[]) {
+  if (option) {
+    switch (option.type) {
+      case TYPE.CHEATSHEET:
+        const cheatsheet = option as Cheatsheet;
+        location.href = cheatsheet.url;
+        break;
+      case TYPE.PEOPLE:
+        const author = option as Author;
+        location.href = `/authors/${author.id}`;
+        break;
     }
   }
+}
+
+export default function Home() {
+  const [showTypeahead, setShowTypeahead] = useState(false);
 
   useEffect(() => setShowTypeahead(true));
 
